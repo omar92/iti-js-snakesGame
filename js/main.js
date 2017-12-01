@@ -1,3 +1,5 @@
+var aler=0;
+
 var mainState = {
   preload: function() {
     game.load.image("player1", "assets/player.png");
@@ -33,6 +35,19 @@ var mainState = {
       this.playerOne.move();
       this.playerTwo.move();
       this.map.update();
+                    
+        if(!aler){
+            if(this.playerOne.win){
+                alert("player1 win");
+               aler =1;
+            }
+            else if(this.playerTwo.win){
+                alert("player2 win"); 
+                aler = 1;
+            }
+            
+        }
+
     }
   }
 };

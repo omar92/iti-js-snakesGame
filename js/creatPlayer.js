@@ -11,6 +11,8 @@ var CreatPlayer = function(imageName) {
   this.cursor;
   this.tweens = [];
   this.map;
+    
+  this.win;
 
   this.init = function() {
     for (let i = 0; i < this.health; i++) {
@@ -61,6 +63,9 @@ var CreatPlayer = function(imageName) {
         }
 
         let postion = this.content[0].x - 30;
+          
+        if(postion <= 10) postion= 10;
+          
         for (let index = 0; index < this.content.length; index++) {
           this.tweens.push(
             game.add
@@ -79,6 +84,9 @@ var CreatPlayer = function(imageName) {
           this.LeftFlag = false;
         }
         let postion = this.content[0].x + 30;
+          
+        if(postion >= 490) postion = 490;
+          
         for (let index = 0; index < this.content.length; index++) {
           this.tweens.push(
             game.add

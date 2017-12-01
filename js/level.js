@@ -35,6 +35,7 @@ var Map = function(width, blockSize, player1, player2, end) {
     if (val <= 0) {
       this.DestroyBlock(this.collidedBlock);
     }
+
   };
 
   var IsOutOfMap = function(block, end) {
@@ -155,22 +156,38 @@ var Map = function(width, blockSize, player1, player2, end) {
       );
       //game.physics.arcade.collide(this.blocks[index].sprite, player1.content, CheckCollision, null, this);
       // game.physics.arcade.collide(this.blocks[index].sprite, player2.content, CheckCollision, null, this);
+        
       this.collidedPlayer = this.player1;
-      game.physics.arcade.overlap(
+        
+     if(
+         game.physics.arcade.overlap(
         this.blocks[index].sprite,
         player1.head,
         CheckCollision,
         null,
         this
-      );
+      )){
+          if(this.player1.health == 0){
+              this.player2.win = 1;
+              blockFallSpeed = 0;             
+              
+          }
+      }
       this.collidedPlayer = this.player2;
+        
+    if(
       game.physics.arcade.overlap(
         this.blocks[index].sprite,
         player2.head,
         CheckCollision,
         null,
         this
-      );
+      )){
+          if(this.player2.health == 0){
+              this.player1.win = 1;
+              blockFallSpeed= 0;         
+          }
+      }
       game.physics.arcade.overlap(
         end,
         this.blocks[index].sprite,
