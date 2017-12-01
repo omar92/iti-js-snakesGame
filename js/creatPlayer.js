@@ -94,11 +94,12 @@ var CreatPlayer = function(imageName)
             }
 
             this.head = this.content[0];
-            
+            /*
             for (let index = 0; index < this.map.blocks.length; index++) 
             {
                 game.physics.arcade.overlap(this.map.blocks[index].sprite, this.head, CheckCollision, null, this);            
             }
+            */
         }                
     },
 
@@ -115,12 +116,6 @@ var CreatPlayer = function(imageName)
     var CheckCollision = function()
     {
 
-        for (var index = 0; index < this.content.length; index++) 
-        {
-            //let element = this.content[index];      
-            //console.log(element);
-          //  this.content[index].y += 30;      
-        }
-        //this.removeTail();
+       
     }
 }
