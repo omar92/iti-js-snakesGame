@@ -5,16 +5,21 @@ var Block = function(pos, val, sprite)
     this.sprite = sprite;
 }
 
-var Map = function(width, blockSize, player, end)
+var Map = function(width, blockSize, player1, player2, end)
 {    
     this.blocks = [];
     this.end;
-    this.player;
+    this.player1 = player1;
+    this.player2 = player2;
     var width = width;
     var blockSize = blockSize;
     var blocksNum = width / blockSize;
     var collidedBlock = undefined;
+    var collidedPlayer = undefined;
     var outOfTheMap = false;
+    var playerFallBackSpeed = 20;
+    var blockStartingPosition = -100;
+    var blockFallSpeed = 70;
 
     this.EditBlock = function()
     {
@@ -30,15 +35,19 @@ var Map = function(width, blockSize, player, end)
     {
         let val = parseInt(this.collidedBlock.text.text);
         val--;
+        this.collidedBlock.text.text = val.toString();
+
+        for (var index = 0; index < this.collidedPlayer.content.length; index++) 
+        {
+            this.collidedPlayer.content[index].y += playerFallBackSpeed;      
+        }
+
+        this.collidedPlayer.removeTail();
 
         if (val <= 0)
         {
             this.DestroyBlock(this.collidedBlock);
         }
-
-        this.collidedBlock.text.text = val.toString();
-
-        console.log(val);
     }
 
     var IsOutOfMap = function(block, end)
@@ -49,24 +58,19 @@ var Map = function(width, blockSize, player, end)
 
     this.GenerateBlocks = function()
     {
-        console.log(blocksNum);
         for (let index = 0; index < blocksNum; index++) 
         {
-            let sprite = game.add.sprite(index * blockSize, -100, "empty");
-            var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: sprite.width, align: "center", backgroundColor: "#ffff00" };
-            text = game.add.text(0, 0, "10", style);
+            let sprite = game.add.sprite(index * blockSize, blockStartingPosition, "empty");
+            var style = { font: "32px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: sprite.width, align: "center" };
+            text = game.add.text(0, 0, "3", style);
 
             text.anchor.set(0.5);
             game.physics.arcade.enable(sprite); 
-            //sprite.body.gravity.y = 50;
-            let block = new Block({x:index * blockSize, y:-100}, text, sprite);
+            sprite.body.immovable = true;
+            sprite.body.velocity.y = blockFallSpeed;
+            let block = new Block({x:index * blockSize, y:blockStartingPosition}, text, sprite);
             this.blocks.push(block);
-        }
-
-        for (var index = 0; index < this.blocks.length; index++) 
-        {
-            this.blocks[index].sprite.body.velocity.y = 70;           
-        }
+        }       
     }
 
     this.DestroyBlock = function(block)
@@ -110,10 +114,16 @@ var Map = function(width, blockSize, player, end)
             this.collidedBlock = this.blocks[index];
             this.blocks[index].text.x = Math.floor(this.blocks[index].sprite.x + this.blocks[index].sprite.width / 2);
             this.blocks[index].text.y = Math.floor(this.blocks[index].sprite.y + this.blocks[index].sprite.height / 2);
-            game.physics.arcade.overlap(this.blocks[index].sprite, player.content, CheckCollision, null, this);            
+            //game.physics.arcade.collide(this.blocks[index].sprite, player1.content, CheckCollision, null, this);
+           // game.physics.arcade.collide(this.blocks[index].sprite, player2.content, CheckCollision, null, this);
+            this.collidedPlayer = this.player1;
+            game.physics.arcade.overlap(this.blocks[index].sprite, player1.head, CheckCollision, null, this);        
+            this.collidedPlayer = this.player2;                
+            game.physics.arcade.overlap(this.blocks[index].sprite, player2.head, CheckCollision, null, this);            
             game.physics.arcade.overlap(end, this.blocks[index].sprite, IsOutOfMap, null, this);            
         }
 
         this.collidedBlock = undefined;     
+        this.collidedPlayer = undefined;     
     }
 }

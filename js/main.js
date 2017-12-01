@@ -20,14 +20,15 @@ var mainState =
         this.end = game.add.sprite(0, 750, "empty");
         this.end.width = 1000;
         game.physics.arcade.enable(this.end); 
-        this.map = new Map(500, 100, this.playerOne, this.end);
 
         this.playerTwo = new CreatPlayer('player2');
         this.playerTwo.init();
         this.playerTwo.setControlKey('');
         this.playerTwo.addTail();
 
-
+        this.map = new Map(500, 100, this.playerOne, this.playerTwo, this.end);
+        this.playerOne.map = this.map;
+        this.playerTwo.map = this.map;
     },
 
     update: function() 
@@ -35,7 +36,7 @@ var mainState =
         // This function is called 60 times per second // It contains the game's logic 
         this.playerOne.move();
         this.playerTwo.move();
-        this.map.update();
+        this.map.update(); 
     },
 
 
