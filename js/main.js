@@ -17,7 +17,10 @@ var mainState =
         this.playerOne.init();
         this.playerOne.setControlKey('cursor');
         this.playerOne.removeTail();
-        this.map = new Map(500, 100, this.playerOne);
+        this.end = game.add.sprite(0, 750, "empty");
+        this.end.width = 1000;
+        game.physics.arcade.enable(this.end); 
+        this.map = new Map(500, 100, this.playerOne, this.end);
 
         this.playerTwo = new CreatPlayer('player2');
         this.playerTwo.init();

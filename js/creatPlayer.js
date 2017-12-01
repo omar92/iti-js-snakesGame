@@ -1,5 +1,6 @@
 var CreatPlayer = function(imageName) 
 {
+    this.head;
     this.content = [];
     this.spriteName = imageName || '';
     this.x = game.world.centerX;
@@ -19,6 +20,7 @@ var CreatPlayer = function(imageName)
             this.content[i].anchor.setTo(0.5, 0.5);
             game.physics.arcade.enable(this.content[i]);
         }
+        this.head = this.content[0];
     };
 
     this.setControlKey = function(keyType) 
@@ -53,49 +55,50 @@ var CreatPlayer = function(imageName)
 
     this.move = function() 
     {
-            if (this.cursor.left.isDown) 
-            {
-                if (this.RightFlag) 
-                    {
-                    this.removeAllTweens();
-                    this.RightFlag = false;
-                }
-
-                let postion = this.content[0].x - 30;
-                for (let index = 0; index < this.content.length; index++) 
-                {
-                    this.tweens.push(game.add.tween(this.content[index]).to({ x: postion }, 200 + (index * 200), "Quart.easeOut"));
-                    this.tweens[this.tweens.length - 1].start();
-                }
-
-                this.LeftFlag = true;
-
-            } else if (this.cursor.right.isDown) 
-            {
-                console.log("flag= " + this.LeftFlag);
-
-                if (this.LeftFlag) 
-                {
-                    this.removeAllTweens();
-                    this.LeftFlag = false;
-                }
-                let postion = this.content[0].x + 30;
-                for (let index = 0; index < this.content.length; index++) 
-                {
-                    this.tweens.push(game.add.tween(this.content[index]).to({ x: postion }, 200 + (index * 200), "Quart.easeOut"));
-                    this.tweens[this.tweens.length - 1].start();
-                }
-                this.RightFlag = true;
-            }
-        },
-        this.removeAllTweens = function() 
+        this.head = this.content[0];
+        if (this.cursor.left.isDown) 
         {
-            let x = this.tweens.length;
-            for (let i = 0; i < x; i++) 
+            if (this.RightFlag) 
             {
-                this.tweens[this.tweens.length - 1].stop();
-                this.tweens.pop();
+                this.removeAllTweens();
+                this.RightFlag = false;
             }
-        }
 
+            let postion = this.content[0].x - 30;
+            for (let index = 0; index < this.content.length; index++) 
+            {
+                this.tweens.push(game.add.tween(this.content[index]).to({ x: postion }, 200 + (index * 200), "Quart.easeOut"));
+                this.tweens[this.tweens.length - 1].start();
+            }
+
+            this.LeftFlag = true;
+
+        } else if (this.cursor.right.isDown) 
+        {
+            console.log("flag= " + this.LeftFlag);
+
+            if (this.LeftFlag) 
+            {
+                this.removeAllTweens();
+                this.LeftFlag = false;
+            }
+            let postion = this.content[0].x + 30;
+            for (let index = 0; index < this.content.length; index++) 
+            {
+                this.tweens.push(game.add.tween(this.content[index]).to({ x: postion }, 200 + (index * 200), "Quart.easeOut"));
+                this.tweens[this.tweens.length - 1].start();
+            }
+            this.RightFlag = true;
+        }
+    },
+
+    this.removeAllTweens = function() 
+    {
+        let x = this.tweens.length;
+        for (let i = 0; i < x; i++) 
+        {
+            this.tweens[this.tweens.length - 1].stop();
+            this.tweens.pop();
+        }
+    }
 }
