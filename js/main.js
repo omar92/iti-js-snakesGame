@@ -3,9 +3,11 @@ var mainState = {
     game.load.image("player1", "assets/player.png");
     game.load.image("player2", "assets/player2.png");
     game.load.image("empty", "assets/empty.png");
+    game.load.audio("collesion", "assets/audio/SoundEffects/crash.mp3");
   },
 
   create: function() {
+    SoundManager.init(function onInit(params) {});
     game.physics.startSystem(Phaser.Physics.ARCADE);
     this.playerOne = new CreatPlayer("player1");
     this.playerOne.init();
@@ -27,9 +29,11 @@ var mainState = {
 
   update: function() {
     // This function is called 60 times per second // It contains the game's logic
-    this.playerOne.move();
-    this.playerTwo.move();
-    this.map.update();
+    if (SoundManager.initialiased) {
+      this.playerOne.move();
+      this.playerTwo.move();
+      this.map.update();
+    }
   }
 };
 
