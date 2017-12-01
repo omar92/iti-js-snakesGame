@@ -6,7 +6,7 @@ var CreatPlayer = function(imageName)
     this.x = game.world.centerX;
     this.y = game.world.centerY;
     this.height = 22;
-    this.health = 5;
+    this.health = 10;
     this.LeftFlag = false;
     this.RightFlag = false;
     this.cursor;
