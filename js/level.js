@@ -17,7 +17,7 @@ var Map = function(width, blockSize, player1, player2, end) {
   var outOfTheMap = false;
   var playerFallBackSpeed = 20;
   var blockStartingPosition = -100;
-  var blockFallSpeed = 450;
+  var blockFallSpeed = 400;
   var blockMin;
   var blockMax;
 
@@ -86,18 +86,21 @@ var Map = function(width, blockSize, player1, player2, end) {
     let ind1 = Math.round(Math.random() * (blocksNum - 1));
     let ind2 = Math.round(Math.random() * (blocksNum - 1));
 
-    if (player1.health >= 1) {
-      this.blocks[ind1].text.text = (player1.health - 1).toString();
-    } else {
-      let rnd = Math.round(50 + Math.random() * 20);
-      this.blocks[ind1].text.text = rnd.toString();
-    }
 
-    if (player2.health >= 1) {
-      this.blocks[ind2].text.text = (player2.health - 1).toString();
-    } else {
-      let rnd = Math.round(50 + Math.random() * 20);
-      this.blocks[ind2].text.text = rnd.toString();
+    if (blocksNum == maxBlocksNum) {
+      if (player1.health >= 1) {
+        this.blocks[ind1].text.text = (player1.health - 1).toString();
+      } else {
+        let rnd = Math.round(50 + Math.random() * 20);
+        this.blocks[ind1].text.text = rnd.toString();
+      }
+
+      if (player2.health >= 1) {
+        this.blocks[ind2].text.text = (player2.health - 1).toString();
+      } else {
+        let rnd = Math.round(50 + Math.random() * 20);
+        this.blocks[ind2].text.text = rnd.toString();
+      }
     }
 
     for (let index = 0; index < this.blocks.length; index++) {
