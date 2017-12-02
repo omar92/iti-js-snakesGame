@@ -106,7 +106,7 @@ var Map = function(width, blockSize, player1, player2, end) {
 
     for (let index = 0; index < this.blocks.length; index++) {
       if (index != ind1 && index != ind2) {
-        let rnd = Math.round(50 + Math.random() * 20);
+        let rnd = Math.round(1 + Math.random() * (player1.health>player2.health?player1.health+2:player2.health+2));
         this.blocks[index].text.text = rnd.toString();
       }
 
