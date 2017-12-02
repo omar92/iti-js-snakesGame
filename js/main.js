@@ -40,19 +40,24 @@ var mainState = {
             this.map.update();
             this.collector.update();
             if (this.playerOne.win || this.playerTwo.win) {
-                if (!aler) {
-                    if (this.playerOne.win) {
-                        var conf = alert("player1 win");
-                        aler = 1;
-                    } else if (this.playerTwo.win) {
-                        var conf = alert("player2 win");
-                        aler = 1;
-                    }
+				if (this.playerOne.win && this.playerTwo.win) {
+					if (!aler) {
+						var conf = alert("Draw");
+						aler = 1;
+					}
+				}else{
+					if (!aler) {
+						if (this.playerOne.win) {
+							var conf = alert("player1 win");
+							aler = 1;
+						} else if (this.playerTwo.win) {
+							var conf = alert("player2 win");
+							aler = 1;
+						}
+					}
 
-                    location.reload();
-
-                }
-
+				}
+				location.reload();
             }
 
 
