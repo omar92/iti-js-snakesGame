@@ -1,0 +1,49 @@
+var Collect = function(player1, player2, spriteName, numberOfCollectObj) {
+    this.spriteName = spriteName || '';
+    this.player1 = player1 || undefined;
+    this.player2 = player2 || undefined;
+    this.numberOfCollectObj = numberOfCollectObj || 1;
+    this.content = [];
+
+    this.random = function() {
+        for (let i = 0; i < this.numberOfCollectObj; i++) {
+            let x = game.add.sprite(game.world.randomX, 20, this.spriteName);
+            x.width = 20;
+            x.height = 20;
+            game.physics.arcade.enable(x);
+            x.enableBody = true;
+            x.body.immovable = true;
+            x.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+            x.body.gravity.y = 100;
+            this.content.push(x);
+        }
+    }
+
+    this.clearContent = function() {
+        this.content.splice(0, this.content.length);
+    }
+
+    this.checkAllContentKill = function() {
+        let flag = true;
+        if (this.content.length > 0) {
+            for (let i = 0; i < this.content.length; i++) {
+                if (this.content[i].inWorld) {
+                    return false;
+                }
+            }
+        }
+        return flag;
+    }
+
+    this.update = function() {
+        if (this.checkAllContentKill()) {
+            this.clearContent();
+            this.random();
+
+
+        }
+    }
+
+
+
+}
