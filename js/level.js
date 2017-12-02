@@ -15,7 +15,7 @@ var Map = function(width, blockSize, player1, player2, end) {
   var collidedBlock = undefined;
   var collidedPlayer = undefined;
   var outOfTheMap = false;
-  var playerFallBackSpeed = 20;
+  var playerFallBackSpeed = 0;
   var blockStartingPosition = -100;
   blockFallSpeed = 400;
   var blockMin;
