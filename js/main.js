@@ -35,18 +35,23 @@ var mainState = {
       this.playerOne.move();
       this.playerTwo.move();
       this.map.update();
-                    
+         if(this.playerOne.win || this.playerTwo.win){          
         if(!aler){
             if(this.playerOne.win){
-                alert("player1 win");
+                var conf= alert("player1 win");
                aler =1;
             }
             else if(this.playerTwo.win){
-                alert("player2 win"); 
+                var conf= alert("player2 win"); 
                 aler = 1;
             }
             
+        location.reload();
+
         }
+             
+         }
+        
 
     }
   }
