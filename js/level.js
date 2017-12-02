@@ -3,7 +3,7 @@ var Block = function(pos, val, sprite) {
   this.text = val;
   this.sprite = sprite;
 };
-
+var blockFallSpeed = 0;
 var Map = function(width, blockSize, player1, player2, end) {
   this.blocks = [];
   this.end;
@@ -17,7 +17,7 @@ var Map = function(width, blockSize, player1, player2, end) {
   var outOfTheMap = false;
   var playerFallBackSpeed = 20;
   var blockStartingPosition = -100;
-  var blockFallSpeed = 400;
+  blockFallSpeed = 400;
   var blockMin;
   var blockMax;
 
@@ -35,7 +35,6 @@ var Map = function(width, blockSize, player1, player2, end) {
     if (val <= 0) {
       this.DestroyBlock(this.collidedBlock);
     }
-
   };
 
   var IsOutOfMap = function(block, end) {
@@ -44,6 +43,7 @@ var Map = function(width, blockSize, player1, player2, end) {
   };
 
   this.GenerateBlocks = function(blocksNum) {
+    blockFallSpeed += 10;
     var positions = [];
     for (let i = 0; i < maxBlocksNum; i++) {
       positions.push(i);
@@ -87,7 +87,6 @@ var Map = function(width, blockSize, player1, player2, end) {
     let ind1 = Math.round(Math.random() * (blocksNum - 1));
     let ind2 = Math.round(Math.random() * (blocksNum - 1));
 
-
     if (blocksNum == maxBlocksNum) {
       if (player1.health >= 1) {
         this.blocks[ind1].text.text = (player1.health - 1).toString();
@@ -106,7 +105,13 @@ var Map = function(width, blockSize, player1, player2, end) {
 
     for (let index = 0; index < this.blocks.length; index++) {
       if (index != ind1 && index != ind2) {
-        let rnd = Math.round(1 + Math.random() * (player1.health>player2.health?player1.health+2:player2.health+2));
+        let rnd = Math.round(
+          1 +
+            Math.random() *
+              (player1.health > player2.health
+                ? player1.health + 2
+                : player2.health + 2)
+        );
         this.blocks[index].text.text = rnd.toString();
       }
 
@@ -141,7 +146,7 @@ var Map = function(width, blockSize, player1, player2, end) {
   this.update = function() {
     if (this.blocks.length == 0) {
       console.log(this.blocks.length);
-      var blocksNum = Math.floor(Math.random() * (maxBlocksNum + 2)) + 1;
+      var blocksNum = Math.floor(Math.random() * (maxBlocksNum - 1)) + 1;
       console.log("blocksNum :" + blocksNum);
       this.GenerateBlocks(blocksNum > maxBlocksNum ? maxBlocksNum : blocksNum);
     }
@@ -156,37 +161,38 @@ var Map = function(width, blockSize, player1, player2, end) {
       );
       //game.physics.arcade.collide(this.blocks[index].sprite, player1.content, CheckCollision, null, this);
       // game.physics.arcade.collide(this.blocks[index].sprite, player2.content, CheckCollision, null, this);
-        
+
       this.collidedPlayer = this.player1;
-        
-     if(
-         game.physics.arcade.overlap(
-        this.blocks[index].sprite,
-        player1.head,
-        CheckCollision,
-        null,
-        this
-      )){
-          if(this.player1.health == 0){
-              this.player2.win = 1;
-              blockFallSpeed = 0;             
-              
-          }
+
+      if (
+        game.physics.arcade.overlap(
+          this.blocks[index].sprite,
+          player1.head,
+          CheckCollision,
+          null,
+          this
+        )
+      ) {
+        if (this.player1.health == 0) {
+          this.player2.win = 1;
+          blockFallSpeed = 0;
+        }
       }
       this.collidedPlayer = this.player2;
-        
-    if(
-      game.physics.arcade.overlap(
-        this.blocks[index].sprite,
-        player2.head,
-        CheckCollision,
-        null,
-        this
-      )){
-          if(this.player2.health == 0){
-              this.player1.win = 1;
-              blockFallSpeed= 0;         
-          }
+
+      if (
+        game.physics.arcade.overlap(
+          this.blocks[index].sprite,
+          player2.head,
+          CheckCollision,
+          null,
+          this
+        )
+      ) {
+        if (this.player2.health == 0) {
+          this.player1.win = 1;
+          blockFallSpeed = 0;
+        }
       }
       game.physics.arcade.overlap(
         end,
