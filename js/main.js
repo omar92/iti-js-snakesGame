@@ -1,11 +1,10 @@
-var aler = 0;
-
 var mainState = {
     preload: function() {
         game.load.image("player1", "assets/player.png");
         game.load.image("player2", "assets/player2.png");
         game.load.image("empty", "assets/empty.png");
         game.load.audio("collesion", "assets/audio/SoundEffects/crash.mp3");
+
     },
 
     create: function() {
@@ -29,7 +28,7 @@ var mainState = {
         this.playerTwo.map = this.map;
 
         this.collector = new Collect(this.playerOne, this.playerTwo, "player1", 1);
-
+        this.aler = 0;
     },
 
     update: function() {
@@ -41,23 +40,24 @@ var mainState = {
             this.collector.update();
             if (this.playerOne.win || this.playerTwo.win) {
                 if (this.playerOne.win && this.playerTwo.win) {
-                    if (!aler) {
+                    if (!this.aler) {
                         var conf = alert("Draw");
-                        aler = 1;
+                        this.aler = 1;
                     }
                 } else {
-                    if (!aler) {
+                    if (!this.aler) {
                         if (this.playerOne.win) {
                             var conf = alert("player1 win");
-                            aler = 1;
+                            this.aler = 1;
                         } else if (this.playerTwo.win) {
                             var conf = alert("player2 win");
-                            aler = 1;
+                            this.aler = 1;
                         }
                     }
 
                 }
-                location.reload();
+                //location.reload();
+                game.state.restart();
             }
 
 
