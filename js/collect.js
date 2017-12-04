@@ -39,11 +39,48 @@ var Collect = function(player1, player2, spriteName, numberOfCollectObj) {
         if (this.checkAllContentKill()) {
             this.clearContent();
             this.random();
-
-
         }
-    }
+        
+        for(var i= 0; i < this.content.length; i++){
+            var food = this.content[i];
+          if(
+            game.physics.arcade.overlap(
+          food,
+          player2.head,
+          CheckCollision,//(this.content[0], this.player2),
+          null,
+          this
+        )
+            ){
+              player2.addTail();
+          }
+            if(
+            game.physics.arcade.overlap(
+          food,
+          player1.head,
+          CheckCollision,//(this.content[0], this.player2),
+          null,
+          this
+        )
+            ){
+              player1.addTail();
+            
+          }
+        }
+        
 
+}
+}
 
-
+  var CheckCollision = function(content, player) {
+    console.log(player);
+      
+      setTimeout(function(){
+          if(content){
+              content.kill();
+              
+          }
+          
+      }, 10) 
+       this.content=[];
 }
