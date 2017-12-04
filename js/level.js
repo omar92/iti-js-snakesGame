@@ -33,7 +33,10 @@ var Map = function(width, blockSize, player1, player2, end) {
     this.collidedPlayer.removeTail();
 
     if (val <= 0) {
-      this.DestroyBlock(this.collidedBlock);
+
+		this.DestroyBlock(this.collidedBlock);
+		
+      
     }
   };
 
@@ -122,17 +125,20 @@ var Map = function(width, blockSize, player1, player2, end) {
   };
 
   this.DestroyBlock = function(block) {
-    block.sprite.destroy(true);
-    block.text.destroy(true);
-    block = undefined;
+	setTimeout(function(){
+		block.sprite.destroy(true);
+		block.text.destroy(true);
+		block = undefined;
+		if(this.blocks){
+			for (var index = 0; index < this.blocks.length; index++) {
+			  if (this.blocks[index] == undefined) {
+				break;
+			  }
+			}
+		this.blocks.splice(index, 1);
+		}
+	},1);
 
-    for (var index = 0; index < this.blocks.length; index++) {
-      if (this.blocks[index] == undefined) {
-        break;
-      }
-    }
-
-    this.blocks.splice(index, 1);
   };
 
   this.DestroyBlocks = function() {
