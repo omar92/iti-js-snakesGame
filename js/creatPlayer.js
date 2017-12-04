@@ -1,4 +1,5 @@
-var CreatPlayer = function(imageName) {
+var CreatPlayer = function(color) {
+    var imageName = "player1"
   this.head;
   this.content = [];
   this.spriteName = imageName || "";
@@ -20,6 +21,7 @@ var CreatPlayer = function(imageName) {
         game.add.sprite(this.x, this.y + i * this.height + 100, this.spriteName)
       );
       this.content[i].anchor.setTo(0.5, 0.5);
+        this.content[i].tint=color ;//'0xff0000';//getRandomColor();
       game.physics.arcade.enable(this.content[i]);
     }
     this.head = this.content[0];
