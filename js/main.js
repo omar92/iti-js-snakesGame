@@ -7,6 +7,7 @@ var mainState = {
         game.load.image("empty", "assets/empty.png");
         game.load.image("life", "assets/SmallHeart.png");
         game.load.audio("collesion", "assets/audio/SoundEffects/crash.mp3");
+        game.load.audio("bgSound", "assets/audio/SoundEffects/music-snake.mp3");
 
     },
 
@@ -36,6 +37,7 @@ var mainState = {
 
         this.collector = new Collect(this.playerOne, this.playerTwo, "life", 1);
         this.aler = 0;
+        SoundManager.playSound("bgSound", true);
     },
 
     update: function() {
