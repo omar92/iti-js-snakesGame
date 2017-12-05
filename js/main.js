@@ -1,5 +1,6 @@
 var winnerName = "";
-
+var player1color= '0xff0000';
+var player2color= '0x0000ff';
 var mainState = {
     preload: function() {
         game.load.image("player1", "assets/player.png");
@@ -14,15 +15,14 @@ var mainState = {
         game.stage.backgroundColor = "#000";
         SoundManager.init(function onInit(params) {});
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.playerOne = new CreatPlayer('0xff0000');
+        this.playerOne = new CreatPlayer(player1color);
         this.playerOne.x = this.playerOne.x + 20;
         this.playerOne.init();
         this.playerOne.setControlKey("cursor");
         //     this.playerOne.removeTail();
 
-        this.playerTwo = new CreatPlayer('0xffff00');
+        this.playerTwo = new CreatPlayer(player2color);
         this.playerTwo.x = this.playerTwo.x - 20;
-
         this.playerTwo.init();
         this.playerTwo.setControlKey("");
         //     this.playerTwo.addTail();
@@ -87,7 +87,12 @@ var winnerState = {
     },
 
     create: function() {
-        this.bg = game.add.sprite(0, 0, 'win');
+        this.bg = game.add.sprite(0,0, 'win');
+       
+        
+        this.bg.x= game.world.centerX -(this.bg.width/2);        
+        this.bg.y= game.world.centerY -(this.bg.height/2);
+        
 
 
         this.bg.x = game.world.centerX - (this.bg.width / 2);
@@ -95,18 +100,23 @@ var winnerState = {
         this.playerImg = game.add.sprite(10, 10, 'player1');
 
         game.stage.backgroundColor = "#fff";
+        
+        var style = { font: "bold 14px Arial", fill: "rgb(0,1,0)", boundsAlignH: "center", boundsAlignV: "middle" };
+        
+        if(winnerName!="Draw"){
+            this.playerImg = game.add.sprite(229,210,'player1');
+            this.playerImg .tint=winnerName=="Player1"?player1color:player2color;
+            this.playerImg.scale.setTo(1.75)
+        }
+    //  The Text is positioned at 0, 100
+    text = game.add.text(0, 0, winnerName, style);
+    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
 
-        var style = { font: "bold 20px Arial", fill: "rgb(0,1,0)", boundsAlignH: "center", boundsAlignV: "middle" };
-        this.playerImg.tint = winnerName == "Player1" ? '0xff0000' : '0xffff00';
-        //  The Text is positioned at 0, 100
-        text = game.add.text(0, 0, winnerName, style);
-        text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-
-        //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
-        text.setTextBounds(250, 220, 0, 0);
-
-        button = game.add.button(game.world.centerX, 500, 'button', this.actionOnClick, this, 2, 1, 0);
-        button.anchor.setTo(0.5, 0.5);
+    //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+    text.setTextBounds(250, 190, 0, 0);
+        
+         button = game.add.button(game.world.centerX , 500, 'button', this.actionOnClick, this, 2, 1, 0);
+         button.anchor.setTo(0.5, 0.5);
         button.width = 200;
         button.height = 90;
 

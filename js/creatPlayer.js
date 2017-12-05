@@ -27,6 +27,18 @@ var CreatPlayer = function(color) {
         this.head = this.content[0];
     };
 
+  this.addTail = function() {
+    this.x = this.content[this.content.length - 1].x;
+    this.y = this.content[this.content.length - 1].y;
+    this.content.push(
+      game.add.sprite(this.x, this.y + this.height, this.spriteName)
+    );
+    this.content[this.content.length - 1].anchor.setTo(0.5, 0.5);
+    this.content[this.content.length - 1].tint= color;
+      
+    game.physics.arcade.enable(this.content[this.content.length - 1]);
+    this.health++;
+  };
     this.setControlKey = function(keyType) {
         if (keyType === "cursor") {
             this.cursor = game.input.keyboard.createCursorKeys();
@@ -38,17 +50,7 @@ var CreatPlayer = function(color) {
         }
     };
 
-    this.addTail = function() {
-        this.x = this.content[this.content.length - 1].x;
-        this.y = this.content[this.content.length - 1].y;
-        this.content.push(
-            game.add.sprite(this.content[this.content.length - 1].x, this.content[this.content.length - 1].y + this.height, this.spriteName)
-        );
-        this.content[this.content.length - 1].tint = color
-        this.content[this.content.length - 1].anchor.setTo(0.5, 0.5);
-        game.physics.arcade.enable(this.content[this.content.length - 1]);
-        this.health++;
-    };
+
 
     this.removeTail = function() {
         SoundManager.playSound(SoundManager.SOUNDS.COLLISION);
