@@ -36,6 +36,26 @@ var mainState = {
 
         this.collector = new Collect(this.playerOne, this.playerTwo, "life", 1);
         this.aler = 0;
+        
+        ////////////////////////////////////////////
+        this.playerImg = game.add.sprite(10, 10,'player1');
+        this.playerImg .tint= player1color;
+        
+         var style = { font: "bold 20px Arial", fill: "white", boundsAlignH: "center", boundsAlignV: "middle" };
+        
+        this.text1 = game.add.text(0, 0, "0", style);
+
+        //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+        this.text1.setTextBounds(50, 23, 0, 0);
+        
+        
+        this.playerImg = game.add.sprite(470 ,10,'player2');
+        this.playerImg .tint= player2color;
+        
+        this.text2 = game.add.text(0, 0, "0", style);
+
+        //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+        this.text2.setTextBounds(455, 23, 0, 0);
     },
 
     update: function() {
@@ -43,6 +63,10 @@ var mainState = {
         if (SoundManager.initialiased) {
             this.playerOne.move();
             this.playerTwo.move();
+            
+            this.text1.text=this.playerOne.health;
+            this.text2.text=this.playerTwo.health;
+            
             this.map.update();
             this.collector.update();
             if (this.playerOne.win || this.playerTwo.win) {
@@ -108,12 +132,12 @@ var winnerState = {
             this.playerImg .tint=winnerName=="Player1"?player1color:player2color;
             this.playerImg.scale.setTo(1.75)
         }
-    //  The Text is positioned at 0, 100
-    text = game.add.text(0, 0, winnerName, style);
-    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        //  The Text is positioned at 0, 100
+        text = game.add.text(0, 0, winnerName, style);
+        text.setShadow(3, 3, 'rgba(1,1,1,0.5)', 2);
 
-    //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
-    text.setTextBounds(250, 190, 0, 0);
+        //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+        text.setTextBounds(250, 190, 0, 0);
         
          button = game.add.button(game.world.centerX , 500, 'button', this.actionOnClick, this, 2, 1, 0);
          button.anchor.setTo(0.5, 0.5);
