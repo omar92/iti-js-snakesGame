@@ -1,27 +1,36 @@
 var winnerName = "";
-var player1color= '0xff0000';
-var player2color= '0x0000ff';
+var player1color = '0xff0000';
+var player2color = '0x0000ff';
 var mainState = {
     preload: function() {
-        game.load.image("player1", "assets/player.png");
+        game.load.image("player1", "assets/player1.png");
         game.load.image("player2", "assets/player2.png");
+        game.load.image("tail", "assets/tail.png");
         game.load.image("empty", "assets/empty.png");
-        game.load.image("life", "assets/SmallHeart.png");
+        game.load.image("life", "assets/star.png");
+        game.load.image("env", "assets/bg.png");
         game.load.audio("collesion", "assets/audio/SoundEffects/crash.mp3");
 
     },
 
     create: function() {
-        game.stage.backgroundColor = "#000";
+
+
+        this.bg = game.add.sprite(0, 0, 'env');
+        this.bg.width = 500;
+        this.bg.height = 600;
+        game.stage.backgroundColor = this.bg;
+
+
         SoundManager.init(function onInit(params) {});
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.playerOne = new CreatPlayer(player1color);
+        this.playerOne = new CreatPlayer('player1');
         this.playerOne.x = this.playerOne.x + 20;
         this.playerOne.init();
         this.playerOne.setControlKey("cursor");
         //     this.playerOne.removeTail();
 
-        this.playerTwo = new CreatPlayer(player2color);
+        this.playerTwo = new CreatPlayer('player2');
         this.playerTwo.x = this.playerTwo.x - 20;
         this.playerTwo.init();
         this.playerTwo.setControlKey("");
@@ -36,22 +45,27 @@ var mainState = {
 
         this.collector = new Collect(this.playerOne, this.playerTwo, "life", 1);
         this.aler = 0;
-        
+
         ////////////////////////////////////////////
-        this.playerImg = game.add.sprite(10, 10,'player1');
-        this.playerImg .tint= player1color;
-        
-         var style = { font: "bold 20px Arial", fill: "white", boundsAlignH: "center", boundsAlignV: "middle" };
-        
+        this.playerImg = game.add.sprite(10, 10, 'player1');
+        this.playerImg.width = 30;
+        this.playerImg.height = 30;
+
+        // this.playerImg.tint = player1color;
+
+        var style = { font: "bold 20px Arial", fill: "white", boundsAlignH: "center", boundsAlignV: "middle" };
+
         this.text1 = game.add.text(0, 0, "0", style);
 
         //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
         this.text1.setTextBounds(50, 23, 0, 0);
-        
-        
-        this.playerImg = game.add.sprite(470 ,10,'player2');
-        this.playerImg .tint= player2color;
-        
+
+
+        this.playerImg = game.add.sprite(470, 10, 'player2');
+        this.playerImg.width = 30;
+        this.playerImg.height = 30;
+        //this.playerImg.tint = player2color;
+
         this.text2 = game.add.text(0, 0, "0", style);
 
         //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
@@ -63,10 +77,10 @@ var mainState = {
         if (SoundManager.initialiased) {
             this.playerOne.move();
             this.playerTwo.move();
-            
-            this.text1.text=this.playerOne.health;
-            this.text2.text=this.playerTwo.health;
-            
+
+            this.text1.text = this.playerOne.health;
+            this.text2.text = this.playerTwo.health;
+
             this.map.update();
             this.collector.update();
             if (this.playerOne.win || this.playerTwo.win) {
@@ -111,25 +125,26 @@ var winnerState = {
     },
 
     create: function() {
-        this.bg = game.add.sprite(0,0, 'win');
-       
-        
-        this.bg.x= game.world.centerX -(this.bg.width/2);        
-        this.bg.y= game.world.centerY -(this.bg.height/2);
-        
+        this.bg = game.add.sprite(0, 0, 'win');
+
+
+        this.bg.x = game.world.centerX - (this.bg.width / 2);
+        this.bg.y = game.world.centerY - (this.bg.height / 2);
+
 
 
         this.bg.x = game.world.centerX - (this.bg.width / 2);
         this.bg.y = game.world.centerY - (this.bg.height / 2);
         this.playerImg = game.add.sprite(10, 10, 'player1');
-
+        this.playerImg.width = 30;
+        this.playerImg.height = 30;
         game.stage.backgroundColor = "#fff";
-        
+
         var style = { font: "bold 14px Arial", fill: "rgb(0,1,0)", boundsAlignH: "center", boundsAlignV: "middle" };
-        
-        if(winnerName!="Draw"){
-            this.playerImg = game.add.sprite(229,210,'player1');
-            this.playerImg .tint=winnerName=="Player1"?player1color:player2color;
+
+        if (winnerName != "Draw") {
+            this.playerImg = game.add.sprite(229, 210, 'player1');
+            this.playerImg.tint = winnerName == "Player1" ? player1color : player2color;
             this.playerImg.scale.setTo(1.75)
         }
         //  The Text is positioned at 0, 100
@@ -138,9 +153,9 @@ var winnerState = {
 
         //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
         text.setTextBounds(250, 190, 0, 0);
-        
-         button = game.add.button(game.world.centerX , 500, 'button', this.actionOnClick, this, 2, 1, 0);
-         button.anchor.setTo(0.5, 0.5);
+
+        button = game.add.button(game.world.centerX, 500, 'button', this.actionOnClick, this, 2, 1, 0);
+        button.anchor.setTo(0.5, 0.5);
         button.width = 200;
         button.height = 90;
 
