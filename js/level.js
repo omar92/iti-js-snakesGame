@@ -91,35 +91,41 @@ var Map = function(width, blockSize, player1, player2, end) {
         let ind1 = Math.round(Math.random() * (blocksNum - 1));
         let ind2 = Math.round(Math.random() * (blocksNum - 1));
 
-        if (blocksNum == maxBlocksNum) {
+        if (blocksNum === maxBlocksNum) {
             if (player1.health >= 1) {
                 this.blocks[ind1].text.text = (player1.health - 1).toString();
             } else {
-                let rnd = Math.round(50 + Math.random() * 20);
+                let rnd = Math.round(
+                    1 +
+                    Math.random() *
+                    (player1.health > player2.health ? player1.health - 1 : player2.health - 1)
+                );
                 this.blocks[ind1].text.text = rnd.toString();
             }
 
             if (player2.health >= 1) {
                 this.blocks[ind2].text.text = (player2.health - 1).toString();
             } else {
-                let rnd = Math.round(50 + Math.random() * 20);
+                let rnd = Math.round(
+                    1 +
+                    Math.random() *
+                    (player1.health > player2.health ? player1.health - 1 : player2.health - 1)
+                );
                 this.blocks[ind2].text.text = rnd.toString();
             }
         }
 
         for (let index = 0; index < this.blocks.length; index++) {
-            if (index != ind1 && index != ind2) {
+            if (index !== ind1 && index !== ind2) {
                 let rnd = Math.round(
                     1 +
                     Math.random() *
-                    (player1.health > player2.health ?
-                        player1.health + 2 :
-                        player2.health + 2)
+                    (player1.health > player2.health ? player1.health - 1 : player2.health - 1)
                 );
                 this.blocks[index].text.text = rnd.toString();
             }
 
-            if (parseInt(this.blocks[index].text.text) == 0) {
+            if (parseInt(this.blocks[index].text.text) === 0) {
                 //   this.DestroyBlock(this.blocks[index]);
             }
         }
