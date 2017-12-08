@@ -1,6 +1,7 @@
 var winnerName = "";
 var player1color = '0xff0000';
 var player2color = '0x0000ff';
+var screenSize = { x: 500, y: 600 };
 var mainState = {
     preload: function() {
         game.load.image("player1", "assets/player1.png");
@@ -9,16 +10,23 @@ var mainState = {
         game.load.image("empty", "assets/empty.png");
         game.load.image("life", "assets/star.png");
         game.load.image("env", "assets/bg.png");
+        game.load.image("planet_00", "assets/planet_00.png");
+        game.load.image("planet_01", "assets/planet_01.png");
+        game.load.image("planet_02", "assets/planet_02.png");
+        game.load.image("planet_03", "assets/planet_03.png");
+        game.load.image("planet_04", "assets/planet_04.png");
         game.load.audio("collesion", "assets/audio/SoundEffects/crash.mp3");
+     
 
     },
+
 
     create: function() {
 
 
         this.bg = game.add.sprite(0, 0, 'env');
-        this.bg.width = 500;
-        this.bg.height = 600;
+        this.bg.width = screenSize.x;
+        this.bg.height = screenSize.y;
         game.stage.backgroundColor = this.bg;
 
 
@@ -142,9 +150,9 @@ var winnerState = {
 
         var style = { font: "bold 14px Arial", fill: "rgb(0,1,0)", boundsAlignH: "center", boundsAlignV: "middle" };
 
-        if (winnerName != "Draw") {
+        if (winnerName !== "Draw") {
             this.playerImg = game.add.sprite(229, 210, 'player1');
-            this.playerImg.tint = winnerName == "Player1" ? player1color : player2color;
+            this.playerImg.tint = winnerName === "Player1" ? player1color : player2color;
             this.playerImg.scale.setTo(1.75)
         }
         //  The Text is positioned at 0, 100
