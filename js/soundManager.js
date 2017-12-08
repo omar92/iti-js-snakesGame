@@ -1,35 +1,37 @@
 var SoundManager = {};
 SoundManager.initialiased = false;
 SoundManager.SOUNDS = {
-    COLLISION: "collesion",
-    BG: "bgSound"
+  COLLISION: "collesion",
+  BG: "bgSound"
 
 };
 SoundManager.soundsInistants = [];
 SoundManager.init = function(onInit) {
-    for (let index = 0; index < SoundManager.SOUNDS.length; index++) {
-        SoundManager.soundsInistants[SoundManager.SOUNDS[index]] = game.add.audio(
-            SoundManager.SOUNDS[index]
-        );
+
+  for (const key in SoundManager.SOUNDS) {
+    if (SoundManager.SOUNDS.hasOwnProperty(key)) {
+      const id = SoundManager.SOUNDS[key];
+      SoundManager.soundsInistants[id] = game.add.audio(id);
     }
-    game.sound.setDecodedCallback(
-        SoundManager.soundsInistants,
-        function(params) {
-            SoundManager.initialiased = true;
-            onInit();
-        },
-        this
-    );
+  }
+  game.sound.setDecodedCallback(
+    SoundManager.soundsInistants,
+    function(params) {
+      SoundManager.initialiased = true;
+      onInit();
+    },
+    this
+  );
 };
 
 SoundManager.playSound = function(sound, isRepeat) {
-    isRepeat = isRepeat || false;
-    if (SoundManager.initialiased)
-        if (SoundManager.soundsInistants[sound]) {
-            SoundManager.soundsInistants[sound].play();
-            if (isRepeat) {
-                SoundManager.soundsInistants[sound].loopFull();
-            }
-        }
+  isRepeat = isRepeat || false;
+  if (SoundManager.initialiased)
+    if (SoundManager.soundsInistants[sound]) {
+      SoundManager.soundsInistants[sound].play();
+      if (isRepeat) {
+        SoundManager.soundsInistants[sound].loopFull();
+      }
+    }
 
 };
