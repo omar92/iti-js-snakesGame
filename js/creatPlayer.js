@@ -23,7 +23,7 @@ var CreatPlayer = function(imageName) {
         this.content[0].anchor.setTo(0.5, 0.5);
         this.content[0].width = 50;
         this.content[0].height = 50;
-        //this.content[i].tint = color; //'0xff0000';//getRandomColor();
+
         game.physics.arcade.enable(this.content[0]);
 
         for (let i = 1; i < this.health + 1; i++) {
@@ -33,7 +33,7 @@ var CreatPlayer = function(imageName) {
             this.content[i].anchor.setTo(0.5, 0.5);
             this.content[i].width = 20;
             this.content[i].height = 20;
-            //this.content[i].tint = color; //'0xff0000';//getRandomColor();
+
             game.physics.arcade.enable(this.content[i]);
         }
         this.head = this.content[0];
@@ -46,7 +46,7 @@ var CreatPlayer = function(imageName) {
             game.add.sprite(this.x, this.y + this.height, 'tail')
         );
         this.content[this.content.length - 1].anchor.setTo(0.5, 0.5);
-        //this.content[this.content.length - 1].tint = color;
+
         this.content[this.content.length - 1].width = 20;
         this.content[this.content.length - 1].height = 20;
         game.physics.arcade.enable(this.content[this.content.length - 1]);
@@ -95,7 +95,7 @@ var CreatPlayer = function(imageName) {
 
                     this.LeftFlag = true;
                 } else if (this.cursor.right.isDown) {
-                    //console.log("flag= " + this.LeftFlag);
+
 
                     if (this.LeftFlag) {
                         this.removeAllTweens();
@@ -117,12 +117,7 @@ var CreatPlayer = function(imageName) {
                 }
 
                 this.head = this.content[0];
-                /*
-                      for (let index = 0; index < this.map.blocks.length; index++) 
-                      {
-                          game.physics.arcade.overlap(this.map.blocks[index].sprite, this.head, CheckCollision, null, this);            
-                      }
-                      */
+
             }
         },
         this.removeAllTweens = function() {
