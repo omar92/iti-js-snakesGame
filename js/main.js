@@ -16,7 +16,7 @@ var mainState = {
         game.load.image("planet_03", "assets/planet_03.png");
         game.load.image("planet_04", "assets/planet_04.png");
         game.load.audio("collesion", "assets/audio/SoundEffects/crash.mp3");
-     
+        game.load.audio("bgSound", "assets/audio/SoundEffects/music-snake.mp3");
 
     },
 
@@ -30,7 +30,7 @@ var mainState = {
         game.stage.backgroundColor = this.bg;
 
 
-        SoundManager.init(function onInit(params) {});
+        SoundManager.init(function onInit(params) { SoundManager.playSound("bgSound", true);});
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.playerOne = new CreatPlayer('player1');
         this.playerOne.x = this.playerOne.x + 20;
@@ -78,6 +78,7 @@ var mainState = {
 
         //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
         this.text2.setTextBounds(455, 23, 0, 0);
+      
     },
 
     update: function() {
