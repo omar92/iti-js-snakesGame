@@ -7,6 +7,7 @@ var mainState = {
         game.load.image("tail", "assets/tail.png");
         game.load.image("empty", "assets/empty.png");
         game.load.image("life", "assets/star.png");
+        game.load.image("swap", "assets/swap.png");
         game.load.image("env", "assets/bg.png");
         game.load.image("planet_00", "assets/planet_00.png");
         game.load.image("planet_01", "assets/planet_01.png");
@@ -41,6 +42,9 @@ var mainState = {
         this.playerTwo.init();
         this.playerTwo.setControlKey("");
 
+        this.playerOne.otherPlayer = this.playerTwo;
+        this.playerTwo.otherPlayer = this.playerOne;
+
         this.end = game.add.sprite(0, 750, "empty");
         this.end.width = 1000;
         game.physics.arcade.enable(this.end);
@@ -50,6 +54,7 @@ var mainState = {
         this.playerTwo.map = this.map;
 
         this.collector = new Collect(this.playerOne, this.playerTwo, "life", 1);
+        this.abilites = new Ability(this.playerOne, this.playerTwo, "swap", "swap");
         this.aler = 0;
 
         ////////////////////////////////////////////
@@ -84,6 +89,7 @@ var mainState = {
             this.text2.text = this.playerTwo.health;
 
             this.map.update();
+            this.abilites.update();
             this.collector.update();
             if (this.playerOne.win || this.playerTwo.win) {
                 if (this.playerOne.win && this.playerTwo.win) {
@@ -107,6 +113,7 @@ var mainState = {
 
                 }
                 clearTimeout(this.collector.timerId);
+                clearTimeout(this.abilites.timerId);
 
                 game.state.start("win");
             }
