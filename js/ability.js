@@ -41,7 +41,7 @@ var Ability = function(player1, player2, spriteName, abilityName) {
                 var that = this;
                 this.timerId = setTimeout(function() {
                     that.random();
-                }, 500);
+                }, 8000);
                 this.flag = false;
             }
         }
@@ -83,7 +83,7 @@ var Ability = function(player1, player2, spriteName, abilityName) {
 
                             }
 
-                        }, 8000)
+                        }, 10)
                         this.content = null;
                     },
                     null,
