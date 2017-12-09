@@ -198,6 +198,7 @@ var Map = function(width, blockSize, player1, player2, end) {
 
             for (var index = 0; index < this.blocks.length; index++) {
                 this.collidedBlock = this.blocks[index];
+                //game.debug.body(this.blocks[index].sprite);
                 this.blocks[index].text.x = Math.floor(
                     this.blocks[index].sprite.x + this.blocks[index].sprite.width / 2
                 );

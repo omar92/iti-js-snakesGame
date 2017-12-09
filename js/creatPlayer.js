@@ -130,7 +130,7 @@ var CreatPlayer = function(imageName) {
 
         }
         // game.debug.bodyInfo(this.head, 32, 32);
-        game.debug.body(this.head);
+        // game.debug.body(this.head);
     };
 
     this.removeAllTweens = function() {
