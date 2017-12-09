@@ -1,5 +1,4 @@
 var winnerName = "";
-
 var screenSize = { x: 500, y: 600 };
 var mainState = {
     preload: function() {

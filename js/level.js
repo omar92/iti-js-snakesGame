@@ -1,11 +1,11 @@
-var Block = function (pos, val, sprite) {
+var Block = function(pos, val, sprite) {
     this.position = pos;
     this.text = val;
     this.sprite = sprite;
     this.destroyed = false;
 };
 var blockFallSpeed = 0;
-var Map = function (width, blockSize, player1, player2, end) {
+var Map = function(width, blockSize, player1, player2, end) {
     this.blocks = [];
     this.end;
     this.player1 = player1;
@@ -20,7 +20,7 @@ var Map = function (width, blockSize, player1, player2, end) {
     var blockMin;
     var blockMax;
 
-    var CheckCollision = function (block, player) {
+    var CheckCollision = function(block, player) {
         let val = parseInt(this.collidedBlock.text.text);
         val--;
         this.collidedBlock.text.text = val.toString();
@@ -40,12 +40,12 @@ var Map = function (width, blockSize, player1, player2, end) {
     };
 
 
-    var IsOutOfMap = function (block, end) {
+    var IsOutOfMap = function(block, end) {
         //console.log("colliding");
         this.DestroyBlocks();
     };
 
-    this.GenerateBlocks = function (blocksNum) {
+    this.GenerateBlocks = function(blocksNum) {
         blockFallSpeed += 10;
         var positions = [];
         var planets = [];
@@ -67,7 +67,7 @@ var Map = function (width, blockSize, player1, player2, end) {
             );
 
             let sprite = game.add.sprite(0, 0, "planet_0" + randPlanet);
-            blockSize = ((screenSize.x) / (maxBlocksNum-1 ));
+            blockSize = ((screenSize.x) / (maxBlocksNum - 1));
             sprite.position.set(
                 randPosition * blockSize,
                 blockStartingPosition
@@ -86,15 +86,17 @@ var Map = function (width, blockSize, player1, player2, end) {
             text = game.add.text(0, 0, "3", style);
             text.stroke = '#000000';
             text.strokeThickness = 5;
-           // text.fill = '#43d637';
+            // text.fill = '#43d637';
             text.anchor.set(0.5);
             game.physics.arcade.enable(sprite);
             sprite.body.immovable = true;
             sprite.body.velocity.y = blockFallSpeed;
+
             let block = new Block({ x: index * blockSize, y: blockStartingPosition },
                 text,
                 sprite
             );
+
             this.blocks.push(block);
         }
 
@@ -139,9 +141,10 @@ var Map = function (width, blockSize, player1, player2, end) {
                 //   this.DestroyBlock(this.blocks[index]);
             }
         }
+
     };
 
-    this.DestroyBlock = function (block) {
+    this.DestroyBlock = function(block) {
 
         block.sprite.destroy(true);
         block.text.destroy(true);
@@ -174,7 +177,7 @@ var Map = function (width, blockSize, player1, player2, end) {
         }
     };
 
-    this.DestroyBlocks = function () {
+    this.DestroyBlocks = function() {
         for (var index = 0; index < this.blocks.length; index++) {
             this.blocks[index].sprite.destroy(true);
             this.blocks[index].text.destroy(true);
@@ -183,7 +186,7 @@ var Map = function (width, blockSize, player1, player2, end) {
         this.blocks = [];
     };
 
-    this.update = function () {
+    this.update = function() {
         var blocksNum = Math.floor(Math.random() * (maxBlocksNum) - 1) + 1;
         //      console.log(this.blocks.length);
         //console.log("blocksNum :" + blocksNum);
@@ -199,7 +202,7 @@ var Map = function (width, blockSize, player1, player2, end) {
                     this.blocks[index].sprite.x + this.blocks[index].sprite.width / 2
                 );
                 this.blocks[index].text.y = Math.floor(
-                    this.blocks[index].sprite.y + this.blocks[index].sprite.height / 2+7
+                    this.blocks[index].sprite.y + this.blocks[index].sprite.height / 2 + 7
                 );
                 //game.physics.arcade.collide(this.blocks[index].sprite, player1.content, CheckCollision, null, this);
                 // game.physics.arcade.collide(this.blocks[index].sprite, player2.content, CheckCollision, null, this);
