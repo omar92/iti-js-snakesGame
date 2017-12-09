@@ -106,6 +106,7 @@ var mainState = {
                     }
 
                 }
+                clearTimeout(this.collector.timerId);
 
                 game.state.start("win");
             }

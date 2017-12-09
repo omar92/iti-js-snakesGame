@@ -4,7 +4,8 @@ var Collect = function(player1, player2, spriteName, numberOfCollectObj) {
     this.player2 = player2 || undefined;
     this.numberOfCollectObj = numberOfCollectObj || 1;
     this.content = [];
-
+    this.flag = true;
+    this.timerId;
     this.random = function() {
         for (let i = 0; i < this.numberOfCollectObj; i++) {
             let x = game.add.sprite(game.world.randomX, 20, this.spriteName);
@@ -17,6 +18,7 @@ var Collect = function(player1, player2, spriteName, numberOfCollectObj) {
             x.body.gravity.y = 100;
             this.content.push(x);
         }
+        this.flag = true;
     }
 
     this.clearContent = function() {
@@ -37,8 +39,16 @@ var Collect = function(player1, player2, spriteName, numberOfCollectObj) {
 
     this.update = function() {
         if (this.checkAllContentKill()) {
-            this.clearContent();
-            this.random();
+            if (this.flag) {
+                this.clearContent();
+                // this.random();
+
+                var that = this;
+                this.timerId = setTimeout(function() {
+                    that.random();
+                }, 5000);
+                this.flag = false;
+            }
         }
 
         for (var i = 0; i < this.content.length; i++) {
