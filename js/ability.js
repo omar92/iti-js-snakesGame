@@ -9,6 +9,7 @@ var Ability = function(player1, player2, spriteName, abilityName) {
     this.timerId;
     this.random = function() {
         this.content = game.add.sprite(game.world.randomX, 20, this.spriteName);
+        this.content.anchor.setTo(0.5, 0.5);
         this.content.width = 20;
         this.content.height = 20;
         game.physics.arcade.enable(this.content);

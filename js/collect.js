@@ -9,6 +9,7 @@ var Collect = function(player1, player2, spriteName, numberOfCollectObj) {
     this.random = function() {
         for (let i = 0; i < this.numberOfCollectObj; i++) {
             let x = game.add.sprite(game.world.randomX, 20, this.spriteName);
+            x.anchor.setTo(0.5, 0.5);
             x.width = 20;
             x.height = 20;
             game.physics.arcade.enable(x);

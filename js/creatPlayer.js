@@ -147,6 +147,7 @@ var CreatPlayer = function(imageName) {
             if (this.ability === 'swap') {
                 this.ability = null;
                 this.removeAllTweens();
+                this.otherPlayer.removeAllTweens();
                 let positionX1 = this.content[0].x;
                 let positionY1 = this.content[0].y;
                 let positionX2 = this.otherPlayer.content[0].x;
