@@ -66,11 +66,17 @@ var Map = function(width, blockSize, player1, player2, end) {
                 1
             );
 
-            let sprite = game.add.sprite(0, 0, "planet_0" + randPlanet);
-            blockSize = ((screenSize.x) / (maxBlocksNum - 1));
-            sprite.position.set(
+            // let sprite = game.add.sprite(0, 0, "planet_0" + randPlanet);
+            // blockSize = ((screenSize.x) / (maxBlocksNum - 1));
+            // sprite.position.set(
+            //     randPosition * blockSize,
+            //     blockStartingPosition
+            // );
+
+            let sprite = game.add.sprite(
                 randPosition * blockSize,
-                blockStartingPosition
+                blockStartingPosition,
+                "planet_0" + randPlanet
             );
 
             sprite.scale.set(.25);
